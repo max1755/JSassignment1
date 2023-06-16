@@ -1,6 +1,6 @@
-// Assignment 1 | COMP1073 Client-Side JavaScript
+//Assignment 1 | COMP1073 Client-Side JavaScript
 //MAX MARTENS 200495725
-//KIEREN
+//KIEREN HUSSEY 200409682
 /* Variables
 -------------------------------------------------- */
 // Create a new speechSynthesis object
@@ -14,6 +14,7 @@ const adjectiveButton = document.getElementById('adjective');
 const nounButton = document.getElementById('noun');
 const settingsButton = document.getElementById('places');
 const randomButton = document.getElementById('random');
+const resetButton = document.getElementById('default');
 //Story preview
 const currentStory = document.getElementById('currentStory');
 // Variables for story
@@ -56,9 +57,9 @@ function chooseWord(i, array, checkArray) {
 	do{
 		let element = Math.floor(Math.random() * array.length); //Random number is chosen, 1 - 5
 		newString = array[i][element]; //element for the story is chosen
-		console.log(checkArray.includes(newString));
+		console.log(checkArray.includes(newString));//test lines
 		console.log(newString);
-	}while(checkArray.includes(newString));//makes sure it's a new element
+	}while(checkArray.includes(newString));//makes sure it's a new element and not the same one
 	return newString; //element is returned to be used in story
 }
 
@@ -121,11 +122,23 @@ speakButton.addEventListener('click', function () {
 	speakNow(textToSpeak);
 })
 
+//Additional Buttons
+
 //Random generated sentence
 randomButton.addEventListener('click', function(){
 	for  (i = 0; i <= 4; i++){
 		let newString = chooseWord(i, words, speakArray); //Just needs to call this five times
 		speakArray.splice(i, 1, newString);
+	}
+	updatePreview();
+	textToSpeak = speakArray.toString();
+	speakNow(textToSpeak);
+})
+
+//Return to original
+resetButton.addEventListener('click', function(){
+	for (i = 0; i <= 4; i++){
+		speakArray.splice(i, 1, words[i][0]); //Replaces each word in the sentence with the original from the first position
 	}
 	updatePreview();
 	textToSpeak = speakArray.toString();
